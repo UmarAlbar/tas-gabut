@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Bomb</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #2f2f2f;
+            color: white;
+            margin-top: 50px;
+        }
+
+        h1 {
+            font-size: 50px;
+        }
+
+        #timer {
+            font-size: 60px;
+            font-weight: bold;
+            margin-top: 30px;
+            color: #ff6347;
+        }
+
+        #message {
+            font-size: 40px;
+            color: red;
+            visibility: hidden;
+        }
+
+        #start-button {
+            font-size: 20px;
+            padding: 15px 30px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+
+        #start-button:hover {
+            background-color: #45a049;
+        }
+
+        #reset-button {
+            font-size: 20px;
+            padding: 15px 30px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            border-radius: 5px;
+            visibility: hidden;
+        }
+
+        #reset-button:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Time Bomb</h1>
+    <p id="timer">00:30</p>
+    <p id="message">Boom! Time's up!</p>
+    <button id="start-button" onclick="startTimer()">Start Timer</button>
+    <button id="reset-button" onclick="resetTimer()">Reset Timer</button>
+
+    <script>
+        let countdownTime = 30; // Time in seconds (30 seconds countdown)
+        let timerElement = document.getElementById("timer");
+        let messageElement = document.getElementById("message");
+        let startButton = document.getElementById("start-button");
+        let resetButton = document.getElementById("reset-button");
+
+        function startTimer() {
+            startButton.disabled = true;
+            resetButton.style.visibility = "visible";
+
+            let countdownInterval = setInterval(function() {
+                let mins = Math.floor(countdownTime / 60);
+                let secs = countdownTime % 60;
+                timerElement.textContent = `${mins < 10 ? '0' + mins : mins}:${secs < 10 ? '0' + secs : secs}`;
+
+                if (countdownTime <= 0) {
+                    clearInterval(countdownInterval);
+                    messageElement.style.visibility = "visible";
+                    // This can be your "bomb action", for example:
+                    alert("System Shutdown Initiated!");  // Could be a placeholder for actual shutdown
+                    window.location.href = "https://example.com"; // Redirecting to another page
+                } else {
+                    countdownTime--;
+                }
+            }, 1000);
+        }
+
+        function resetTimer() {
+            countdownTime = 30;
+            timerElement.textContent = "00:30";
+            messageElement.style.visibility = "hidden";
+            startButton.disabled = false;
+            resetButton.style.visibility = "hidden";
+        }
+    </script>
+
+	<script src="main.js"></script>
+
+</body>
+</html>
